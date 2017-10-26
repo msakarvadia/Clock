@@ -1,0 +1,43 @@
+header
+{
+  background-color: lightgray;
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-bottom: 20px;/*adjust header */
+  padding-left: 0px;
+  text-align: center;
+  color: darksalmon;
+  border-radius: 25px;
+}
+td
+{
+  padding-left: 30px;
+  padding-right: 30px;
+}
+table
+{
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+p
+{
+  color: salmon;
+  text-align: center;
+}
+.display
+{
+  text-align: center;
+  background-color: lightgray;
+  border-radius: 25px;
+  margin-left: auto;
+  margin-right: auto;
+}
+canvas
+{
+  display: inline-block;
+}
+table
+{
+  color: salmon;
+}
