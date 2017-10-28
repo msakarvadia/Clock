@@ -94,7 +94,7 @@ function setAlarm()
 
       //print: "ur alarm will cound in __ hours, __ minutes __ seconds"
 
-        window.setInterval(soundAlarm, 20);
+        window.setInterval(soundAlarm, 700);
 
 //problem: once sound starts,the function keeps being repeated and the sound starts playing over and over again.
 
@@ -108,6 +108,7 @@ function soundAlarm()
 {
     if (!alarmFlag)
     {
+      document.getElementById('stopAlarmButton').addEventListener("click", stopSound);
       return;
     }
     var now = new Date();
@@ -117,6 +118,7 @@ function soundAlarm()
         {
           alarmFlag = false;
           startSound("bensound-littleidea.mp3");
+
           //var AlarmAlert= alert("Click To End Alarm");
           //AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
         }
@@ -126,10 +128,10 @@ function startSound(mp3)
 {
   audio = new Audio('bensound-littleidea.mp3');
   audio.play();
+
 }
-function stopSound(mp3)
+function stopSound()
 {
-    audio = new Audio(mp3);
-    audio.stopSound();
+    audio.pause();
 }
 	//figure out time for alarm
