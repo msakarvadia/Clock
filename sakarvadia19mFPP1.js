@@ -28,6 +28,11 @@ function init()
       //we have to add the cos value to the Y coordinate and sin value to the x coordinate, because the clock is not oriented like the unit circle
       //the y value must be negative becuase the clock is moving clockwise, as opposed to the counter clockwise unit circle
       now =new Date();
+        ctx.lineCap = "round";
+        ctx.strokeStyle= "lightgray";
+        ctx.lineWidth = 7;
+
+        
         ctx.beginPath();
         ctx.arc(centerX,centerY,200,0,2*Math.PI);
         ctx.fillStyle = 'lightsalmon';
@@ -36,13 +41,12 @@ function init()
 
         ctx.beginPath();
         ctx.arc(centerX,centerY,20,0,2*Math.PI);
-        ctx.fillStyle = 'gray';
+        ctx.fillStyle = 'lightgray';
         ctx.fill();
         ctx.closePath();
       //draws second hand
 
         ctx.beginPath();
-
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(centerX+180*Math.sin((now.getSeconds()*6)*Math.PI /180),
         centerY+180*-Math.cos((now.getSeconds()*6)*Math.PI /180));
@@ -57,24 +61,24 @@ function init()
         ctx.fill();
         ctx.closePath();
 
-//  if(now.getSeconds()==0)
-//  {
-//        ctx.clearRect(0,0,canvas.width, canvas.height);
-//  }
+//clears seconds dots
+    if(now.getSeconds()==0)
+      {
+        ctx.beginPath();
+        ctx.arc(centerX,centerY, 230,0,2*Math.PI);
+        ctx.fillStyle="lightgray";
+        ctx.stroke();
+        ctx.closePath();
+      }
+
       //draws minutes hand
+
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
+
         ctx.lineTo(centerX+150*Math.sin((now.getMinutes()*6)*Math.PI /180),
         centerY+150*-Math.cos((now.getMinutes()*6)*Math.PI /180));
         ctx.stroke();
-
-        //draw a ball when one minute passes
-        ctx.beginPath();
-        ctx.arc(centerX+250*Math.sin((now.getMinutes()*6)*Math.PI /180),
-        centerY+250*-Math.cos((now.getMinutes()*6)*Math.PI /180), 5,0,2*Math.PI);
-        ctx.fillStyle="gray";
-        ctx.fill();
-        ctx.closePath();
 
       //draws hours hand
         ctx.beginPath();
@@ -83,13 +87,7 @@ function init()
         (centerY+100*-Math.cos( (now.getHours()*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
         ctx.stroke();
 
-      //draw a ball when one hour passes
-      ctx.beginPath();
-      ctx.arc((centerX+300*Math.sin( (now.getHours()*30*Math.PI/180))),
-      (centerY+300*-Math.cos( (now.getHours()*30*Math.PI/180))), 7,0,2*Math.PI);
-      ctx.fillStyle="gray";
-      ctx.fill();
-      ctx.closePath();
+
 
   }
     document.getElementById("alarmButton").addEventListener("click", setAlarm);
