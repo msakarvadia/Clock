@@ -1,4 +1,7 @@
 window.addEventListener("load", init);
+var alarmPrompt = "";
+var audio = "";
+var mp3 = "";
 
 function init()
 {
@@ -8,11 +11,12 @@ function init()
   var centerX = canvas.width / 2;
   var centerY = canvas.height / 2;
   //some of this code is borrowed from http://findnerd.com/list/view/A-Concentric-Circle-Clock-Using-JavaScript-and-Canvas/22842/
-var now = new Date();
-//var time = now.toLocaleTimeString();
+  var now = new Date();
   var hours = now.getHours();
   var minutes = now.getMinutes();
   var seconds = now.getSeconds(); //define seconds inside draw
+
+
 
 //  var seconddeg = seconds*6;
   //var minutedeg = minutes*6;
@@ -43,8 +47,8 @@ now =new Date();
   ctx.beginPath();
 
   ctx.moveTo(centerX, centerY);
-  ctx.lineTo(centerX+100*Math.sin((now.getSeconds()*6)*Math.PI /180),
-  centerY+100*-Math.cos((now.getSeconds()*6)*Math.PI /180));
+  ctx.lineTo(centerX+180*Math.sin((now.getSeconds()*6)*Math.PI /180),
+  centerY+180*-Math.cos((now.getSeconds()*6)*Math.PI /180));
   ctx.stroke();
 //draws minutes hand
 
@@ -59,25 +63,23 @@ now =new Date();
   ctx.moveTo(centerX, centerY);
 //  ctx.lineTo((centerX+200*Math.sin(now.getHours()*30*Math.PI /180+now.getMinutes()*.5*Math.PI /180)),
   //(centerY+200*-Math.cos(now.getHours()*30*Math.PI/180 +now.getMinutes()*.5*Math.PI /180)));
-  ctx.lineTo((centerX+180*Math.sin( (now.getHours()*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
-  (centerY+180*-Math.cos( (now.getHours()*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
+  ctx.lineTo((centerX+100*Math.sin( (now.getHours()*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
+  (centerY+100*-Math.cos( (now.getHours()*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
 
   ctx.stroke();
 }
 
-document.getElementById("alarmButton").addEventListener("click", alarm);
-
-
+  document.getElementById("alarmButton").addEventListener("click", setAlarm);
 
 }
 
 
 
 
-function alarm()
+function setAlarm()
 {
 	var now = new Date();
-	var alarmPrompt = prompt("Enter the time you want to sound the alarm. Enter in Military time.", "HH:MM:SS");
+	    alarmPrompt = prompt("Enter the time you want to sound the alarm. Enter in Military time.", "HH:MM:SS");
 			if (alarmPrompt.search(/[0-2][0-3]:[0-5][0-9]:[0-5][0-9]/) == 0)
 			{
         document.getElementById("Aconfirm").innerHTML = "Your Alarm is set to " + alarmPrompt;
@@ -88,28 +90,39 @@ function alarm()
 				//var alarmmin = alarmPrompt.slice(3,5);
 				//var alarmsec = alarmPrompt.slice(6,8);
 
-				//print: "ur alarm will cound in __ hours, __ minutes __ seconds"
+      //print: "ur alarm will cound in __ hours, __ minutes __ seconds"
 
-				if (parseInt(alarmPrompt.slice(0,2))==now.getHours() &&
-                parseInt(alarmPrompt.slice(3,5))==now.getMinutes() &&
-                    parseInt(alarmPrompt.slice(-2)==now.getSeconds()))
-    				{
-              var audio = new Audio('bensound-littleidea.mp3'); ///ADD In My Audio file
-              audio.play();
-              var AlarmAlert= alert("Click To End Alarm");
-              AlarmAlert.addEventListener("click", stopSound);
-    				}
+        window.setInterval(soundAlarm, 20);
+//problem: once sound starts,the function keeps being repeated and the sound starts playing over and over again.
 
-    			}
-    			else
-    			{
-    				alert("The expected format is MILITARY TIME: HH:MM:SS");
-    			}
+    	}
+    	else
+    		{
+    			alert("The expected format is MILITARY TIME: HH:MM:SS");
+    		}
 		}
+function soundAlarm()
+{
+    var now = new Date();
+    if ((parseInt(alarmPrompt.slice(0,2))==now.getHours()) &&
+            (parseInt(alarmPrompt.slice(3,5))==now.getMinutes()) &&
+                (parseInt(alarmPrompt.slice(-2))==now.getSeconds()))
+        {
+          
+          startSound("bensound-littleidea.mp3");
+          //var AlarmAlert= alert("Click To End Alarm");
+          //AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
+        }
+}
 
-  function stopSound(mp3)
-  {
-    var audio = new Audio(mp3);
+function startSound(mp3)
+{
+  audio = new Audio('bensound-littleidea.mp3');
+  audio.play();
+}
+function stopSound(mp3)
+{
+    audio = new Audio(mp3);
     audio.stopSound();
-  }
+}
 	//figure out time for alarm
