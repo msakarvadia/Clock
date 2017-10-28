@@ -1,5 +1,6 @@
 window.addEventListener("load", init);
 var alarmPrompt = "";
+var timerPrompt = "";
 var audio = "";
 var mp3 = "";
 var alarmFlag = true;
@@ -32,7 +33,7 @@ function init()
         ctx.strokeStyle= "lightgray";
         ctx.lineWidth = 7;
 
-        
+
         ctx.beginPath();
         ctx.arc(centerX,centerY,200,0,2*Math.PI);
         ctx.fillStyle = 'lightsalmon';
@@ -75,7 +76,6 @@ function init()
 
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
-
         ctx.lineTo(centerX+150*Math.sin((now.getMinutes()*6)*Math.PI /180),
         centerY+150*-Math.cos((now.getMinutes()*6)*Math.PI /180));
         ctx.stroke();
@@ -91,10 +91,48 @@ function init()
 
   }
     document.getElementById("alarmButton").addEventListener("click", setAlarm);
+    document.getElementById("timerButton").addEventListener("click", setTimer);
 }
 
+function setTimer()
+{
+  var now = new Date();
+      timerPrompt = prompt("Enter how long you want your timer to be.", "HH:MM:SS");
+//figure out correct REGEX!!! --> timer will loop every 24 hours, but if 8 hour timer is set at 23:59... wat do u do
+  if (timerPrompt.search(/([2][0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]/) == 0)
+      {
+        document.getElementById("Tconfirm").innerHTML = "Your timer is set for " + timerPrompt;
+        var now = new Date();
+        //document current timer
+        var timerHour = now.getHours();
+        var timerMinute = now.getMinutes();
+        var timerSecond = now.getSeconds();
+        //ring timer
+      }
 
 
+}
+
+function ringTimer()
+{
+  if (!alarmFlag)
+  {
+    //do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
+    document.getElementById('stopTimerButton').addEventListener("click", stopSound);
+    return;
+  }
+  var now = new Date();
+  if ((parseInt(timerPrompt.slice(0,2))+timerHour == now.getHours()) &&
+          (parseInt(timerPrompt.slice(3,5))+timerMinute == now.getMinutes()) &&
+              (parseInt(timerPrompt.slice(-2))+timerMinute == now.getSeconds()))
+      {
+        alarmFlag = false;
+        startSound("bensound-littleidea.mp3");
+
+        //var AlarmAlert= alert("Click To End Alarm");
+        //AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
+      }
+}
 
 function setAlarm()
 {
@@ -142,6 +180,8 @@ function soundAlarm()
           //AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
         }
 }
+
+
 
 function startSound(mp3)
 {
