@@ -2,6 +2,8 @@ window.addEventListener("load", init);
 var alarmPrompt = "";
 var audio = "";
 var mp3 = "";
+var alarmFlag = true;
+
 
 function init()
 {
@@ -93,6 +95,7 @@ function setAlarm()
       //print: "ur alarm will cound in __ hours, __ minutes __ seconds"
 
         window.setInterval(soundAlarm, 20);
+
 //problem: once sound starts,the function keeps being repeated and the sound starts playing over and over again.
 
     	}
@@ -103,13 +106,16 @@ function setAlarm()
 		}
 function soundAlarm()
 {
+    if (!alarmFlag)
+    {
+      return;
+    }
     var now = new Date();
-    console.log(alarmPrompt);
     if ((parseInt(alarmPrompt.slice(0,2))==now.getHours()) &&
             (parseInt(alarmPrompt.slice(3,5))==now.getMinutes()) &&
                 (parseInt(alarmPrompt.slice(-2))==now.getSeconds()))
         {
-
+          alarmFlag = false;
           startSound("bensound-littleidea.mp3");
           //var AlarmAlert= alert("Click To End Alarm");
           //AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
