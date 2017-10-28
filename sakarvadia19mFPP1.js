@@ -104,11 +104,12 @@ function setAlarm()
 function soundAlarm()
 {
     var now = new Date();
+    console.log(alarmPrompt);
     if ((parseInt(alarmPrompt.slice(0,2))==now.getHours()) &&
             (parseInt(alarmPrompt.slice(3,5))==now.getMinutes()) &&
                 (parseInt(alarmPrompt.slice(-2))==now.getSeconds()))
         {
-          
+
           startSound("bensound-littleidea.mp3");
           //var AlarmAlert= alert("Click To End Alarm");
           //AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
