@@ -1,4 +1,4 @@
-header
+header, h1
 {
   background-color: lightgray;
   padding-top: 10px;
@@ -40,4 +40,25 @@ canvas
 table
 {
   color: salmon;
+}
+
+button
+{
+    background-color: salmon;
+    color: white;
+    border-radius: 25px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+
+#Aconfirm, #Tconfirm
+{
+  padding: 20px;
+
+}
+
+#stopAlarmButton, #stopTimerButton
+{
+  display: none;
 }

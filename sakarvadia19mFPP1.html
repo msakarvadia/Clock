@@ -11,9 +11,9 @@
       <h1>Clock</h1>
       <h2>By: Mansi Sakarvadia</h2>
     </header>
-    <p>This page will tell you the time.</p>
+    <p>This page will keep you on time.</p>
+    <p>Make sure your volume is on!</p>
     <table>
-      <tr><td>To set an alarm:</td><td>To set an timer:</td></tr>
       <tr>
         <td><button type="button" id="alarmButton">Set Alarm!</button></td>
         <td><button type="button" id="timerButton">Set Timer!</button></td>
@@ -23,11 +23,22 @@
       <tr>
         <td ><button type="button" id="stopAlarmButton">Stop Alarm</button></td>
         <td><button type="button" id="stopTimerButton">Stop Timer</button></td>
-        <!--/*LET THEM ADD A REMINDER!!!!*/-->
+        <td colspan="2" id="timezone"></td>
       <tr>
-      <tr><td colspan="2">Make sure your volume is on!</td></tr>
     </table>
     <p class="display"><canvas width= "800" height = "500" id="canvas">Your browser does not support the HTML5 canvas tag.</canvas></p>
+    <h1>Choose Your Time Zone.</h1>
+    <img src="timzone.png" alt="get a better browser!">
+    <table>
+      <tr>
+        <td><button type="button" id="eastern">Eastern</button></td>
+        <td><button type="button" id="central">Central</button></td>
+        <td><button type="button" id="mountain">Mountain</button></td>
+        <td><button type="button" id="pacific">Pacific</button></td>
+        <td><button type="button" id="alaskan">Alaskan</button></td>
+        <td><button type="button" id="hawaiin">Hawaiin</button></td>
+      </tr>
+    </table>
     <p>Music: https://www.bensound.com</p>
 
   </body>

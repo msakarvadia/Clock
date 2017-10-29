@@ -4,7 +4,11 @@ var timerPrompt = "";
 var audio = "";
 var mp3 = "";
 var alarmFlag = true;
-
+var zoneHour = 0;
+var now = new Date();
+var timerHour = 0;
+var timerMinute = 0;
+var timerSecond = 0;
 
 function init()
 {
@@ -15,7 +19,7 @@ function init()
   var centerY = canvas.height / 2;
   //some of this code is borrowed from http://findnerd.com/list/view/A-Concentric-Circle-Clock-Using-JavaScript-and-Canvas/22842/
   var now = new Date();
-  var hours = now.getHours();
+  var hours = now.getHours() + zoneHour;
   var minutes = now.getMinutes();
   var seconds = now.getSeconds(); //define seconds inside draw
   //end of borrowed code
@@ -28,6 +32,8 @@ function init()
       //when calculating the end point of the hands, the coordinates get a little tricky:
       //we have to add the cos value to the Y coordinate and sin value to the x coordinate, because the clock is not oriented like the unit circle
       //the y value must be negative becuase the clock is moving clockwise, as opposed to the counter clockwise unit circle
+
+
       now =new Date();
         ctx.lineCap = "round";
         ctx.strokeStyle= "lightgray";
@@ -76,15 +82,15 @@ function init()
 
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
-        ctx.lineTo(centerX+150*Math.sin((now.getMinutes()*6)*Math.PI /180),
-        centerY+150*-Math.cos((now.getMinutes()*6)*Math.PI /180));
+        ctx.lineTo(centerX+150*Math.sin(((now.getMinutes())*6)*Math.PI /180),
+        centerY+150*-Math.cos(((now.getMinutes())*6)*Math.PI /180));
         ctx.stroke();
 
       //draws hours hand
         ctx.beginPath();
         ctx.moveTo(centerX, centerY);
-        ctx.lineTo((centerX+100*Math.sin( (now.getHours()*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
-        (centerY+100*-Math.cos( (now.getHours()*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
+        ctx.lineTo((centerX+100*Math.sin( ((now.getHours()+zoneHour)*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
+        (centerY+100*-Math.cos( ((now.getHours()+zoneHour)*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
         ctx.stroke();
 
 
@@ -104,12 +110,16 @@ function setTimer()
         document.getElementById("Tconfirm").innerHTML = "Your timer is set for " + timerPrompt;
         var now = new Date();
         //document current timer
-        var timerHour = now.getHours();
-        var timerMinute = now.getMinutes();
-        var timerSecond = now.getSeconds();
-        //ring timer
+        timerHour = now.getHours();
+        timerMinute = now.getMinutes();
+        timerSecond = now.getSeconds();
+        setTimeout(ringTimer,timerPrompt.slice(0,2)*3600000+timerPrompt.slice(3,5)*60000+timerPrompt.slice(-2)*1000);
+        //timerPrompt.slice(0,2)*3,600,000+timerPrompt.slice(3,5)*60,000+timerPrompt.slice(-2)*1000
       }
-
+  else
+  	{
+  		alert("The expected format is MILITARY TIME: HH:MM:SS");
+  	}
 
 }
 
@@ -118,22 +128,19 @@ function ringTimer()
   if (!alarmFlag)
   {
     //do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
+    document.getElementById('stopTimerButton').style.display = "inline-block";
     document.getElementById('stopTimerButton').addEventListener("click", stopSound);
+    document.getElementById("Tconfirm").innerHTML = "";
     return;
   }
   var now = new Date();
-  if ((parseInt(timerPrompt.slice(0,2))+timerHour == now.getHours()) &&
-          (parseInt(timerPrompt.slice(3,5))+timerMinute == now.getMinutes()) &&
-              (parseInt(timerPrompt.slice(-2))+timerMinute == now.getSeconds()))
-      {
-        alarmFlag = false;
-        startSound("bensound-littleidea.mp3");
+  if (alarmFlag)
+  {
+    alarmFlag = false;
+    startSound("bensound-littleidea.mp3");
+  }
 
-        //var AlarmAlert= alert("Click To End Alarm");
-        //AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
-      }
 }
-
 function setAlarm()
 {
 	var now = new Date();
@@ -142,13 +149,6 @@ function setAlarm()
 			{
         document.getElementById("Aconfirm").innerHTML = "Your Alarm is set to " + alarmPrompt;
         var now = new Date();
-				//check that the input is correct
-				//check type of input, lenght of input
-				//var alarmHour = alarmPrompt.slice(0,2);
-				//var alarmmin = alarmPrompt.slice(3,5);
-				//var alarmsec = alarmPrompt.slice(6,8);
-
-      //print: "ur alarm will cound in __ hours, __ minutes __ seconds"
 
         window.setInterval(soundAlarm, 700);
 
@@ -165,7 +165,9 @@ function soundAlarm()
     if (!alarmFlag)
     {
       //do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
+      document.getElementById('stopAlarmButton').style.display = "inline-block";
       document.getElementById('stopAlarmButton').addEventListener("click", stopSound);
+      document.getElementById("Aconfirm").innerHTML = "";
       return;
     }
     var now = new Date();
@@ -187,10 +189,49 @@ function startSound(mp3)
 {
   audio = new Audio('bensound-littleidea.mp3');
   audio.play();
+  //get stopAlarmButton to disapear after clicked
+  document.getElementById('stopAlarmButton').style.display = "none";
 
 }
 function stopSound()
 {
     audio.pause();
+}
+
+function getZoneMinutes()
+{
+  now =new Date();
+  if (document.getElementById('eastern').clicked == true)
+  {
+    now.getHours
+    zoneHour =0;
+    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to USA East Coast time zone.";
+  }
+  if (document.getElementById('central').clicked == true)
+  {
+    zoneHour =  -1;
+    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to USA Central time zone.";
+  }
+  if (document.getElementById('mountain').clicked == true)
+  {
+    zoneHour = -2;
+    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Mountain time zone.";
+  }
+  if (document.getElementById('pacific').clicked == true)
+  {
+    zoneHour = -3;
+    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Pacific time zone.";
+  }
+  if (document.getElementById('alaskan').clicked == true)
+  {
+    zoneHour = -4;
+    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Alaskan time zone.";
+  }
+  if (document.getElementById('hawaiin').clicked == true)
+  //this uses Hawaii - Aleutian Standard time
+  {
+    zoneHour = -6;
+    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Hawaiin-Aleutian Standard Time zone.";
+  }
 }
 	//figure out time for alarm
