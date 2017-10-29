@@ -63,7 +63,7 @@ function init()
 		ctx.textBaseline="middle";
 		ctx.textAlign="center";
 		ctx.fillStyle = "black";
-		ctx.font = "20px Times New Roman";
+		ctx.font = "15px Times New Roman";
 		ctx.fillText("MS Clock Company",centerX, centerY+50);
 		ctx.closePath();
 
@@ -72,8 +72,8 @@ function init()
 		ctx.textBaseline="middle";
 		ctx.fillStyle = "black";
 		ctx.textAlign="center";
-		ctx.font = "20px Times New Roman";
-		ctx.fillText("Since 2001",centerX, centerY+80);
+		ctx.font = "15px Times New Roman";
+		ctx.fillText("Since 2001",centerX, centerY+70);
 		ctx.closePath();
 
 		//calls the function that draws numbers
@@ -187,7 +187,18 @@ function setTimer()
 		timerMinute = now.getMinutes();
 		timerSecond = now.getSeconds();
 		setTimeout(ringTimer,timerPrompt.slice(0,2)*3600000+timerPrompt.slice(3,5)*60000+timerPrompt.slice(-2)*1000);
-		//timerPrompt.slice(0,2)*3,600,000+timerPrompt.slice(3,5)*60,000+timerPrompt.slice(-2)*1000
+	}
+	if (!alarmFlag)
+	{
+		//do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
+		document.getElementById('stopTimerButton').style.display = "inline-block";
+		document.getElementById('stopTimerButton').addEventListener("click", stopSound);
+		document.getElementById('stopTimerButton').addEventListener("click", function(){alarmFlag=true});
+		document.getElementById('stopTimerButton').addEventListener("click", function(){
+		document.getElementById('stopTimerButton').style.display = "none"});
+		console.log(alarmFlag);
+		document.getElementById("Tconfirm").innerHTML = "";
+		return;
 	}
 	else
 	{
@@ -198,14 +209,7 @@ function setTimer()
 
 function ringTimer()
 {
-	if (!alarmFlag)
-	{
-		//do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
-		document.getElementById('stopTimerButton').style.display = "inline-block";
-		document.getElementById('stopTimerButton').addEventListener("click", stopSound);
-		document.getElementById("Tconfirm").innerHTML = "";
-		return;
-	}
+
 	var now = new Date();
 	if (alarmFlag)
 	{

@@ -24,6 +24,8 @@ p
 {
   color: salmon;
   text-align: center;
+  padding-left: auto;
+  padding-right: auto;
 }
 .display
 {
@@ -55,6 +57,7 @@ button
 td
 {
   text-align: center;
+  padding: auto;
 }
 #Aconfirm, #Tconfirm
 {
@@ -62,7 +65,12 @@ td
 
 }
 
-#stopAlarmButton, #stopTimerButton
+#stopAlarmButton
+{
+  display: none;
+}
+
+#stopTimerButton
 {
   display: none;
 }
