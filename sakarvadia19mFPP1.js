@@ -58,6 +58,27 @@ function init()
 		ctx.fill();
 		ctx.closePath();
 
+		//draws companyname
+		ctx.beginPath();
+		ctx.textBaseline="middle";
+		ctx.textAlign="center";
+		ctx.fillStyle = "black";
+		ctx.font = "20px Times New Roman";
+		ctx.fillText("MS Clock Company",centerX, centerY+50);
+		ctx.closePath();
+
+		//draws company year
+		ctx.beginPath();
+		ctx.textBaseline="middle";
+		ctx.fillStyle = "black";
+		ctx.textAlign="center";
+		ctx.font = "20px Times New Roman";
+		ctx.fillText("Since 2001",centerX, centerY+80);
+		ctx.closePath();
+
+		//calls the function that draws numbers
+		drawNum();
+
 		//draws second hand
 
 		ctx.beginPath();
@@ -70,7 +91,7 @@ function init()
 		ctx.stroke();
 		ctx.closePath();
 
-		//draw a ball when one second passes
+	/*	//draw a ball when one second passes
 
 		ctx.beginPath();
 		ctx.arc((centerX+190*Math.sin((now.getSeconds()*6)*Math.PI /180)),
@@ -88,7 +109,7 @@ function init()
 		//    ctx.strokeStyle="lightgray";
 		//    ctx.stroke();
 		//  ctx.closePath();
-		//  }
+		//  } */
 
 		//draws minutes hand
 		ctx.beginPath();
@@ -112,16 +133,12 @@ function init()
 		ctx.stroke();
 		ctx.closePath();
 
-
-
 		//little knob that covers all hands
 		ctx.beginPath();
 		ctx.arc(centerX,centerY,10,0,2*Math.PI);
 		ctx.fillStyle = "#654321";
 		ctx.fill();
 		ctx.closePath();
-
-		drawNum();
 
 		//draw numbers
 		function drawNum()
@@ -133,17 +150,25 @@ function init()
 			{
 				angNum += 1;
 				ctx.beginPath();
+				ctx.fillStyle= "black";
 				ctx.textBaseline="middle";
 				ctx.textAlign="center";
-				ctx.font = "30px Arial";
-				ctx.fillText(num,(centerX+175*Math.sin(angNum*30*Math.PI/180)),
-						(centerY+175*-Math.cos(angNum*30*Math.PI/180)));
+				ctx.font = "40px Times New Roman";
+				ctx.fillText(num,(centerX+165*Math.sin(angNum*30*Math.PI/180)),
+						(centerY+165*-Math.cos(angNum*30*Math.PI/180)));
 				ctx.closePath();
 			}
 		}
 	}
 	document.getElementById("alarmButton").addEventListener("click", setAlarm);
 	document.getElementById("timerButton").addEventListener("click", setTimer);
+		//draws companyname
+		ctx.beginPath();
+		ctx.textBaseline="middle";
+		ctx.textAlign="center";
+		ctx.font = "30px Arial";
+		ctx.fillText("MS Clock Company",centerX, centerY);
+		ctx.closePath();
 }
 
 
@@ -215,6 +240,10 @@ function soundAlarm()
 		//do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
 		document.getElementById('stopAlarmButton').style.display = "inline-block";
 		document.getElementById('stopAlarmButton').addEventListener("click", stopSound);
+		document.getElementById('stopAlarmButton').addEventListener("click", function(){alarmFlag=true});
+		document.getElementById('stopAlarmButton').addEventListener("click", function(){
+		document.getElementById('stopAlarmButton').style.display = "none"});
+		console.log(alarmFlag);
 		document.getElementById("Aconfirm").innerHTML = "";
 		return;
 	}
