@@ -35,9 +35,6 @@ function init()
 
 
       now =new Date();
-        ctx.lineCap = "round";
-        ctx.strokeStyle= "lightgray";
-        ctx.lineWidth = 7;
 
 
         ctx.beginPath();
@@ -48,16 +45,20 @@ function init()
 
         ctx.beginPath();
         ctx.arc(centerX,centerY,20,0,2*Math.PI);
-        ctx.fillStyle = 'lightgray';
+        ctx.fillStyle = 'gray';
         ctx.fill();
         ctx.closePath();
       //draws second hand
 
         ctx.beginPath();
+        ctx.lineCap = "round";
+        ctx.strokeStyle= "black";
+        ctx.lineWidth = 1;
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(centerX+180*Math.sin((now.getSeconds()*6)*Math.PI /180),
         centerY+180*-Math.cos((now.getSeconds()*6)*Math.PI /180));
         ctx.stroke();
+        ctx.closePath();
 
 //draw a ball when one second passes
 
@@ -73,26 +74,33 @@ function init()
       {
         ctx.beginPath();
         ctx.arc(centerX,centerY, 230,0,2*Math.PI);
-        ctx.fillStyle="lightgray";
+        ctx.lineWidth = 10;
+        ctx.strokeStyle="lightgray";
         ctx.stroke();
         ctx.closePath();
       }
 
       //draws minutes hand
-
         ctx.beginPath();
+        ctx.lineCap = "round";
+        ctx.strokeStyle= "gray";
+        ctx.lineWidth = 7;
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(centerX+150*Math.sin(((now.getMinutes())*6)*Math.PI /180),
         centerY+150*-Math.cos(((now.getMinutes())*6)*Math.PI /180));
         ctx.stroke();
+        ctx.closePath();
 
       //draws hours hand
         ctx.beginPath();
+        ctx.lineCap = "round";
+        ctx.strokeStyle= "gray";
+        ctx.lineWidth = 13;
         ctx.moveTo(centerX, centerY);
         ctx.lineTo((centerX+100*Math.sin( ((now.getHours()+zoneHour)*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
         (centerY+100*-Math.cos( ((now.getHours()+zoneHour)*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
         ctx.stroke();
-
+        ctx.closePath();
 
 
   }
@@ -198,40 +206,5 @@ function stopSound()
     audio.pause();
 }
 
-function getZoneMinutes()
-{
-  now =new Date();
-  if (document.getElementById('eastern').clicked == true)
-  {
-    now.getHours
-    zoneHour =0;
-    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to USA East Coast time zone.";
-  }
-  if (document.getElementById('central').clicked == true)
-  {
-    zoneHour =  -1;
-    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to USA Central time zone.";
-  }
-  if (document.getElementById('mountain').clicked == true)
-  {
-    zoneHour = -2;
-    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Mountain time zone.";
-  }
-  if (document.getElementById('pacific').clicked == true)
-  {
-    zoneHour = -3;
-    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Pacific time zone.";
-  }
-  if (document.getElementById('alaskan').clicked == true)
-  {
-    zoneHour = -4;
-    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Alaskan time zone.";
-  }
-  if (document.getElementById('hawaiin').clicked == true)
-  //this uses Hawaii - Aleutian Standard time
-  {
-    zoneHour = -6;
-    document.getElementById("timezone").innerHTML = "The clock and alarm will be set according to the USA Hawaiin-Aleutian Standard Time zone.";
-  }
-}
+
 	//figure out time for alarm
