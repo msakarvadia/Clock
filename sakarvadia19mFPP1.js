@@ -11,7 +11,7 @@ var timerMinute = 0;
 var timerSecond = 0;
 var num = 0;
 var angNum = 0;
-var tick = new Audio('Tick.mp3');
+var tick = new Audio('Ticking-clock-sound.mp3');
 
 function init()
 {
@@ -40,7 +40,6 @@ function init()
 		now =new Date();
 
 		ctx.beginPath();
-		ctx.globalAlpha=1;
 		ctx.arc(centerX,centerY,230,0,2*Math.PI);
 		ctx.fillStyle = "#654321";
 		ctx.fill();
@@ -58,6 +57,7 @@ function init()
 		ctx.fillStyle = '#DAA520';
 		ctx.fill();
 		ctx.closePath();
+
 
 		//draws companyname
 		ctx.beginPath();
@@ -80,6 +80,7 @@ function init()
 		//calls the function that draws numbers
 		drawNum();
 
+
 		//draws second hand
 		ctx.beginPath();
 		ctx.lineCap = "round";
@@ -89,7 +90,7 @@ function init()
 		ctx.lineTo(centerX+170*Math.sin(((now.getSeconds())*6)*Math.PI /180),
 				centerY+170*-Math.cos(((now.getSeconds())*6)*Math.PI /180));
 		ctx.stroke();
-		//tick.play();
+		tick.play();
 		ctx.closePath();
 
 		//draws minutes hand
@@ -114,6 +115,7 @@ function init()
 		ctx.stroke();
 		ctx.closePath();
 
+
 		//little knob that covers all hands
 		ctx.beginPath();
 		ctx.arc(centerX,centerY,10,0,2*Math.PI);
@@ -132,7 +134,6 @@ function init()
 				angNum += 1;
 				ctx.beginPath();
 				ctx.fillStyle= "black";
-				ctx.globalAlpha=1;
 				ctx.textBaseline="middle";
 				ctx.textAlign="center";
 				ctx.font = "40px Times New Roman";
@@ -141,6 +142,22 @@ function init()
 				ctx.closePath();
 			}
 		}
+			function drawTick()
+			{
+					ctx.beginPath();
+					//draws tickmark balls
+					ctx.beginPath();
+					ctx.moveTo(centerX+190*Math.sin(((now.getSeconds())*6)*Math.PI /180),
+							centerY+190*-Math.cos(((now.getSeconds())*6)*Math.PI /180));
+					ctx.lineTo(centerX+200*Math.sin(((now.getSeconds())*6)*Math.PI /180),
+							centerY+200*-Math.cos(((now.getSeconds())*6)*Math.PI /180));
+					ctx.strokeStyle = "black";
+					ctx.lineWidth= 1;
+					ctx.stroke();
+					ctx.closePath();
+			}
+drawTick();
+	}
 
 /*		//drawing reflection on Clock
 		ctx.beginPath();
@@ -150,7 +167,7 @@ function init()
 		ctx.strokeStyle = "white";
 		ctx.stroke();
 		ctx.closePath();*/
-	}
+
 	document.getElementById("alarmButton").addEventListener("click", setAlarm);
 	document.getElementById("timerButton").addEventListener("click", setTimer);
 
