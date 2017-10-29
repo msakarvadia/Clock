@@ -11,7 +11,7 @@ var timerMinute = 0;
 var timerSecond = 0;
 var num = 0;
 var angNum = 0;
-
+var tick = new Audio('Tick.mp3');
 
 function init()
 {
@@ -40,6 +40,7 @@ function init()
 		now =new Date();
 
 		ctx.beginPath();
+		ctx.globalAlpha=1;
 		ctx.arc(centerX,centerY,230,0,2*Math.PI);
 		ctx.fillStyle = "#654321";
 		ctx.fill();
@@ -80,7 +81,6 @@ function init()
 		drawNum();
 
 		//draws second hand
-
 		ctx.beginPath();
 		ctx.lineCap = "round";
 		ctx.strokeStyle= "red";
@@ -89,27 +89,8 @@ function init()
 		ctx.lineTo(centerX+170*Math.sin(((now.getSeconds())*6)*Math.PI /180),
 				centerY+170*-Math.cos(((now.getSeconds())*6)*Math.PI /180));
 		ctx.stroke();
+		//tick.play();
 		ctx.closePath();
-
-	/*	//draw a ball when one second passes
-
-		ctx.beginPath();
-		ctx.arc((centerX+190*Math.sin((now.getSeconds()*6)*Math.PI /180)),
-				(centerY+190*-Math.cos((now.getSeconds()*6)*Math.PI /180)), 3,0,2*Math.PI);
-		ctx.fillStyle="#DAA520";
-		ctx.fill();
-		ctx.closePath();
-
-		//clears seconds dots
-		//  if(now.getSeconds()==0)
-		//    {
-		//      ctx.beginPath();
-		//      ctx.arc(centerX,centerY, 230,0,2*Math.PI);
-		//    ctx.lineWidth = 10;
-		//    ctx.strokeStyle="lightgray";
-		//    ctx.stroke();
-		//  ctx.closePath();
-		//  } */
 
 		//draws minutes hand
 		ctx.beginPath();
@@ -151,6 +132,7 @@ function init()
 				angNum += 1;
 				ctx.beginPath();
 				ctx.fillStyle= "black";
+				ctx.globalAlpha=1;
 				ctx.textBaseline="middle";
 				ctx.textAlign="center";
 				ctx.font = "40px Times New Roman";
@@ -159,19 +141,20 @@ function init()
 				ctx.closePath();
 			}
 		}
+
+/*		//drawing reflection on Clock
+		ctx.beginPath();
+		ctx.globalAlpha=0.3;
+		ctx.arc(centerX,centerY,145,5,2*Math.PI);
+		ctx.lineWidth = 45;
+		ctx.strokeStyle = "white";
+		ctx.stroke();
+		ctx.closePath();*/
 	}
 	document.getElementById("alarmButton").addEventListener("click", setAlarm);
 	document.getElementById("timerButton").addEventListener("click", setTimer);
-		//draws companyname
-		ctx.beginPath();
-		ctx.textBaseline="middle";
-		ctx.textAlign="center";
-		ctx.font = "30px Arial";
-		ctx.fillText("MS Clock Company",centerX, centerY);
-		ctx.closePath();
+
 }
-
-
 
 function setTimer()
 {
