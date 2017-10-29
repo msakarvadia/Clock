@@ -9,6 +9,9 @@ var now = new Date();
 var timerHour = 0;
 var timerMinute = 0;
 var timerSecond = 0;
+var num = 0;
+var angNum = 0;
+
 
 function init()
 {
@@ -36,54 +39,61 @@ function init()
 
       now =new Date();
 
+      ctx.beginPath();
+      ctx.arc(centerX,centerY,230,0,2*Math.PI);
+      ctx.fillStyle = "#654321";
+      ctx.fill();
+      ctx.closePath();
 
+//draws main clock circle
         ctx.beginPath();
         ctx.arc(centerX,centerY,200,0,2*Math.PI);
-        ctx.fillStyle = 'lightsalmon';
+        ctx.fillStyle = '#FAFAD2';
         ctx.fill();
         ctx.closePath();
 
         ctx.beginPath();
         ctx.arc(centerX,centerY,20,0,2*Math.PI);
-        ctx.fillStyle = 'gray';
+        ctx.fillStyle = '#DAA520';
         ctx.fill();
         ctx.closePath();
+
       //draws second hand
 
         ctx.beginPath();
         ctx.lineCap = "round";
-        ctx.strokeStyle= "black";
+        ctx.strokeStyle= "red";
         ctx.lineWidth = 1;
         ctx.moveTo(centerX, centerY);
-        ctx.lineTo(centerX+180*Math.sin((now.getSeconds()*6)*Math.PI /180),
-        centerY+180*-Math.cos((now.getSeconds()*6)*Math.PI /180));
+        ctx.lineTo(centerX+170*Math.sin(((now.getSeconds())*6)*Math.PI /180),
+        centerY+170*-Math.cos(((now.getSeconds())*6)*Math.PI /180));
         ctx.stroke();
         ctx.closePath();
 
 //draw a ball when one second passes
 
         ctx.beginPath();
-        ctx.arc((centerX+230*Math.sin((now.getSeconds()*6)*Math.PI /180)),
-        (centerY+230*-Math.cos((now.getSeconds()*6)*Math.PI /180)), 3,0,2*Math.PI);
-        ctx.fillStyle="gray";
+        ctx.arc((centerX+190*Math.sin((now.getSeconds()*6)*Math.PI /180)),
+        (centerY+190*-Math.cos((now.getSeconds()*6)*Math.PI /180)), 3,0,2*Math.PI);
+        ctx.fillStyle="#DAA520";
         ctx.fill();
         ctx.closePath();
 
 //clears seconds dots
-    if(now.getSeconds()==0)
-      {
-        ctx.beginPath();
-        ctx.arc(centerX,centerY, 230,0,2*Math.PI);
-        ctx.lineWidth = 10;
-        ctx.strokeStyle="lightgray";
-        ctx.stroke();
-        ctx.closePath();
-      }
+  //  if(now.getSeconds()==0)
+  //    {
+  //      ctx.beginPath();
+  //      ctx.arc(centerX,centerY, 230,0,2*Math.PI);
+    //    ctx.lineWidth = 10;
+    //    ctx.strokeStyle="lightgray";
+    //    ctx.stroke();
+      //  ctx.closePath();
+    //  }
 
       //draws minutes hand
         ctx.beginPath();
         ctx.lineCap = "round";
-        ctx.strokeStyle= "gray";
+        ctx.strokeStyle= "#DAA520";
         ctx.lineWidth = 7;
         ctx.moveTo(centerX, centerY);
         ctx.lineTo(centerX+150*Math.sin(((now.getMinutes())*6)*Math.PI /180),
@@ -94,7 +104,7 @@ function init()
       //draws hours hand
         ctx.beginPath();
         ctx.lineCap = "round";
-        ctx.strokeStyle= "gray";
+        ctx.strokeStyle= "#DAA520";
         ctx.lineWidth = 13;
         ctx.moveTo(centerX, centerY);
         ctx.lineTo((centerX+100*Math.sin( ((now.getHours()+zoneHour)*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
@@ -103,10 +113,40 @@ function init()
         ctx.closePath();
 
 
+
+        //little knob that covers all hands
+        ctx.beginPath();
+        ctx.arc(centerX,centerY,10,0,2*Math.PI);
+        ctx.fillStyle = "#654321";
+        ctx.fill();
+        ctx.closePath();
+
+          drawNum();
+
+          //draw numbers
+          function drawNum()
+          {
+          num = 1;
+          angNum =0;
+
+              for(num=1;num<13;num++)
+              {
+                  angNum += 1;
+                  ctx.beginPath();
+                  ctx.textBaseline="middle";
+                  ctx.textAlign="center";
+                  ctx.font = "30px Arial";
+                  ctx.fillText(num, (centerX+175*Math.sin(angNum*30*Math.PI/180)),
+                  (centerY+175*-Math.cos(angNum*30*Math.PI/180)));
+                  ctx.closePath();
+              }
+          }
   }
     document.getElementById("alarmButton").addEventListener("click", setAlarm);
     document.getElementById("timerButton").addEventListener("click", setTimer);
 }
+
+
 
 function setTimer()
 {
