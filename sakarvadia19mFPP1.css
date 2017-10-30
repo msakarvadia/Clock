@@ -1,9 +1,15 @@
+header
+{
+    font-size: 30px;
+    font-family: "times new roman";
+}
+
 header, h1
 {
-  background-color: lightgray;
-  padding-top: 10px;
+  background-color: mistyrose;
+  padding-top: 5px;
   padding-right: 0px;
-  padding-bottom: 20px;/*adjust header */
+  padding-bottom: 10px;/*adjust header */
   padding-left: 0px;
   text-align: center;
   color: darksalmon;
@@ -20,17 +26,21 @@ table
   margin-left: auto;
   margin-right: auto;
 }
+body
+{
+    background-color: WhiteSmoke;
+}
 p
 {
   color: salmon;
   text-align: center;
-  padding-left: auto;
-  padding-right: auto;
+  font-size: 20px;
+  font-family: "times new roman";
 }
 .display
 {
   text-align: center;
-  background-color: lightgray;
+  background-color: mistyrose;
   border-radius: 25px;
   margin-left: auto;
   margin-right: auto;
@@ -47,16 +57,23 @@ table
 button
 {
     background-color: salmon;
+    font-size: 20px;
+    font-family: "times new roman";
     color: white;
+    margin: 5px;
     border-radius: 25px;
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
     text-align: center;
-
+    display: inline-block;
 }
 td
 {
   text-align: center;
+  margin-left: auto;
+  margin-right: auto;
   padding: auto;
 }
 #Aconfirm, #Tconfirm
