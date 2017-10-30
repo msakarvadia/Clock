@@ -13,6 +13,7 @@ var timerSecond = 0;
 var num = 0;
 var angNum = 0;
 var tick = new Audio('Ticking-clock-sound.mp3');
+var timerSound ;
 
 function init()
 {
@@ -40,9 +41,17 @@ function init()
 
 		now =new Date();
 
+		//draws brown rim
 		ctx.beginPath();
-		ctx.arc(centerX,centerY,230,0,2*Math.PI);
+		ctx.arc(centerX,centerY,240,0,2*Math.PI);
 		ctx.fillStyle = "#654321";
+		ctx.fill();
+		ctx.closePath();
+
+		//draws little black interior rim
+		ctx.beginPath();
+		ctx.arc(centerX,centerY,205,0,2*Math.PI);
+		ctx.fillStyle = "#DAA520";
 		ctx.fill();
 		ctx.closePath();
 
@@ -66,7 +75,7 @@ function init()
 		ctx.textAlign="center";
 		ctx.fillStyle = "black";
 		ctx.font = "15px Times New Roman";
-		ctx.fillText("MS Clock Company",centerX, centerY+50);
+		ctx.fillText("MS Clockmakers Inc.",centerX, centerY+50);
 		ctx.closePath();
 
 		//draws company year
@@ -164,15 +173,6 @@ function init()
 drawTick();
 	}
 
-/*		//drawing reflection on Clock
-		ctx.beginPath();
-		ctx.globalAlpha=0.3;
-		ctx.arc(centerX,centerY,145,5,2*Math.PI);
-		ctx.lineWidth = 45;
-		ctx.strokeStyle = "white";
-		ctx.stroke();
-		ctx.closePath();*/
-
 	document.getElementById("alarmButton").addEventListener("click", setAlarm);
 	document.getElementById("timerButton").addEventListener("click", setTimer);
 
@@ -188,7 +188,7 @@ function setTimer()
 		document.getElementById("Tconfirm").innerHTML = "Your timer is set for " + timerPrompt;
 
 		setTimeout(ringTimer,timerPrompt.slice(0,2)*3600000+timerPrompt.slice(3,5)*60000+timerPrompt.slice(-2)*1000);
-		setTimeout(stopTimer,timerPrompt.slice(0,2)*3600000+timerPrompt.slice(3,5)*60000+timerPrompt.slice(-2)*1000);
+		setTimeout(stopTimer,500+timerPrompt.slice(0,2)*3600000+timerPrompt.slice(3,5)*60000+timerPrompt.slice(-2)*1000);
 	}
 	else
 	{
@@ -196,18 +196,22 @@ function setTimer()
 	}
 
 }
+//will give user the option to stop timer
 function stopTimer()
 {
+	if (!timerFlag)
+	{
 		document.getElementById('stopTimerButton').style.display = "inline-block";
-		document.getElementById('stopTimerButton').addEventListener("click", stopSound);
+		document.getElementById('stopTimerButton').addEventListener("click", pauseTimer);
 		document.getElementById('stopTimerButton').addEventListener("click", function(){timerFlag=true});
 		document.getElementById('stopTimerButton').addEventListener("click", function(){
 		document.getElementById('stopTimerButton').style.display = "none"});
 		console.log(timerFlag);
 		document.getElementById("Tconfirm").innerHTML = "";
 		return;
+	}
 }
-
+//will ring when timer is up
 function ringTimer()
 {
 
@@ -215,9 +219,11 @@ function ringTimer()
 
 		timerFlag = false;
 		console.log(timerFlag);
-		startSound("bensound-littleidea.mp3");
+		timerSound = new Audio("bensound-cute.mp3");
+		timerSound.play();
 
 }
+//allows user to set alarm
 function setAlarm()
 {
 	var now = new Date();
@@ -229,7 +235,6 @@ function setAlarm()
 
 		window.setInterval(soundAlarm, 700);
 
-		//problem: once sound starts,the function keeps being repeated and the sound starts playing over and over again.
 
 	}
 	else
@@ -237,11 +242,11 @@ function setAlarm()
 		alert("The expected format is MILITARY TIME: HH:MM:SS");
 	}
 }
+//will ring when the alarm time has been reached
 function soundAlarm()
 {
 	if (!alarmFlag)
 	{
-		//do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
 		document.getElementById('stopAlarmButton').style.display = "inline-block";
 		document.getElementById('stopAlarmButton').addEventListener("click", stopSound);
 		document.getElementById('stopAlarmButton').addEventListener("click", function(){alarmFlag=true});
@@ -259,18 +264,15 @@ function soundAlarm()
 		alarmFlag = false;
 		startSound("bensound-littleidea.mp3");
 
-		//var AlarmAlert= alert("Click To End Alarm");
-		//AlarmAlert.addEventListener("click", stopSound("bensound-littleidea.mp3"));
 	}
 }
 
 
 
-function startSound(mp3)
+function startSound()
 {
 	audio = new Audio('bensound-littleidea.mp3');
 	audio.play();
-	//get stopAlarmButton to disapear after clicked
 	document.getElementById('stopAlarmButton').style.display = "none";
 
 }
@@ -278,6 +280,7 @@ function stopSound()
 {
 	audio.pause();
 }
-
-
-//figure out time for alarm
+function pauseTimer()
+{
+	timerSound.pause();
+}
