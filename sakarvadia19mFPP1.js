@@ -143,19 +143,23 @@ function init()
 				ctx.closePath();
 			}
 		}
+		//draws 60 tick marks around perimeter of clock
+
 			function drawTick()
 			{
+				var tock = 0;
+				for(tock = 0;tock<61;tock++)
+				{
 					ctx.beginPath();
-					//draws tickmark balls
-					ctx.beginPath();
-					ctx.moveTo(centerX+190*Math.sin(((now.getSeconds())*6)*Math.PI /180),
-							centerY+190*-Math.cos(((now.getSeconds())*6)*Math.PI /180));
-					ctx.lineTo(centerX+200*Math.sin(((now.getSeconds())*6)*Math.PI /180),
-							centerY+200*-Math.cos(((now.getSeconds())*6)*Math.PI /180));
+					ctx.moveTo(centerX+190*Math.sin((tock*6)*Math.PI /180),
+							centerY+190*-Math.cos((tock*6)*Math.PI /180));
+					ctx.lineTo(centerX+200*Math.sin((tock*6)*Math.PI /180),
+							centerY+200*-Math.cos((tock*6)*Math.PI /180));
 					ctx.strokeStyle = "black";
 					ctx.lineWidth= 1;
 					ctx.stroke();
 					ctx.closePath();
+				}
 			}
 drawTick();
 	}
@@ -218,7 +222,7 @@ function setAlarm()
 {
 	var now = new Date();
 	alarmPrompt = prompt("Enter the time you want to sound the alarm. Enter in Military time.", "HH:MM:SS");
-	if (alarmPrompt.search(/([2][0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]/) == 0)
+	if ((alarmPrompt.search(/([2][0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]/) == 0))
 	{
 		document.getElementById("Aconfirm").innerHTML = "Your Alarm is set to " + alarmPrompt;
 		var now = new Date();
