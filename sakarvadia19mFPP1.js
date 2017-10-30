@@ -4,6 +4,7 @@ var timerPrompt = "";
 var audio = "";
 var mp3 = "";
 var alarmFlag = true;
+var timerFlag = true;
 var zoneHour = 0;
 var now = new Date();
 var timerHour = 0;
@@ -181,41 +182,36 @@ function setTimer()
 	if (timerPrompt.search(/([2][0-3]|[0-1][0-9]):[0-5][0-9]:[0-5][0-9]/) == 0)
 	{
 		document.getElementById("Tconfirm").innerHTML = "Your timer is set for " + timerPrompt;
-		var now = new Date();
-		//document current timer
-		timerHour = now.getHours();
-		timerMinute = now.getMinutes();
-		timerSecond = now.getSeconds();
+
 		setTimeout(ringTimer,timerPrompt.slice(0,2)*3600000+timerPrompt.slice(3,5)*60000+timerPrompt.slice(-2)*1000);
-	}
-	if (!alarmFlag)
-	{
-		//do this later: document.getElementById("alarmButton").innerHTML = "STOP ALARM";
-		document.getElementById('stopTimerButton').style.display = "inline-block";
-		document.getElementById('stopTimerButton').addEventListener("click", stopSound);
-		document.getElementById('stopTimerButton').addEventListener("click", function(){alarmFlag=true});
-		document.getElementById('stopTimerButton').addEventListener("click", function(){
-		document.getElementById('stopTimerButton').style.display = "none"});
-		console.log(alarmFlag);
-		document.getElementById("Tconfirm").innerHTML = "";
-		return;
+		setTimeout(stopTimer,timerPrompt.slice(0,2)*3600000+timerPrompt.slice(3,5)*60000+timerPrompt.slice(-2)*1000);
 	}
 	else
 	{
-		alert("The expected format is MILITARY TIME: HH:MM:SS");
+		alert("The expected format is: HH:MM:SS");
 	}
 
+}
+function stopTimer()
+{
+		document.getElementById('stopTimerButton').style.display = "inline-block";
+		document.getElementById('stopTimerButton').addEventListener("click", stopSound);
+		document.getElementById('stopTimerButton').addEventListener("click", function(){timerFlag=true});
+		document.getElementById('stopTimerButton').addEventListener("click", function(){
+		document.getElementById('stopTimerButton').style.display = "none"});
+		console.log(timerFlag);
+		document.getElementById("Tconfirm").innerHTML = "";
+		return;
 }
 
 function ringTimer()
 {
 
 	var now = new Date();
-	if (alarmFlag)
-	{
-		alarmFlag = false;
+
+		timerFlag = false;
+		console.log(timerFlag);
 		startSound("bensound-littleidea.mp3");
-	}
 
 }
 function setAlarm()
