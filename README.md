@@ -1,5 +1,4 @@
-
-Click link to view project: msakarvadia.github.io/Clock/
+Click link to view project: [msakarvadia.github.io/Clock/](https://msakarvadia.github.io/Clock/)
 
 or
 
