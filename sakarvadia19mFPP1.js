@@ -5,7 +5,6 @@ var audio = "";
 var mp3 = "";
 var alarmFlag = true;
 var timerFlag = true;
-var zoneHour = 0;
 var now = new Date();
 var timerHour = 0;
 var timerMinute = 0;
@@ -22,22 +21,20 @@ function init()
 
 	var centerX = canvas.width / 2;
 	var centerY = canvas.height / 2;
-	//some of this code is borrowed from http://findnerd.com/list/view/A-Concentric-Circle-Clock-Using-JavaScript-and-Canvas/22842/
 	var now = new Date();
-	var hours = now.getHours() + zoneHour;
+	var hours = now.getHours();
 	var minutes = now.getMinutes();
 	var seconds = now.getSeconds(); //define seconds inside draw
-	//end of borrowed code
-
-	window.setInterval(drawHands, 20);
 
 
-	function drawHands()
+	window.setInterval(drawClock, 20);
+
+
+	function drawClock()
 	{
 		//when calculating the end point of the hands, the coordinates get a little tricky:
 		//we have to add the cos value to the Y coordinate and sin value to the x coordinate, because the clock is not oriented like the unit circle
 		//the y value must be negative becuase the clock is moving clockwise, as opposed to the counter clockwise unit circle
-
 
 		now =new Date();
 
@@ -120,8 +117,8 @@ function init()
 		ctx.strokeStyle= "#DAA520";
 		ctx.lineWidth = 13;
 		ctx.moveTo(centerX, centerY);
-		ctx.lineTo((centerX+100*Math.sin( ((now.getHours()+zoneHour)*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
-				(centerY+100*-Math.cos( ((now.getHours()+zoneHour)*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
+		ctx.lineTo((centerX+100*Math.sin( ((now.getHours())*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)),
+				(centerY+100*-Math.cos( ((now.getHours())*30*Math.PI/180) +now.getMinutes()*.5*Math.PI /180)));
 		ctx.stroke();
 		ctx.closePath();
 
@@ -176,7 +173,9 @@ drawTick();
 	document.getElementById("alarmButton").addEventListener("click", setAlarm);
 	document.getElementById("timerButton").addEventListener("click", setTimer);
 
+
 }
+
 
 function setTimer()
 {
@@ -216,7 +215,6 @@ function ringTimer()
 {
 
 	var now = new Date();
-
 		timerFlag = false;
 		console.log(timerFlag);
 		timerSound = new Audio("bensound-cute.mp3");
